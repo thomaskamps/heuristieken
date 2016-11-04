@@ -1,4 +1,9 @@
 from copy import deepcopy
+import sys
+import random
+sys.setrecursionlimit(150000000)
+
+done_states = []
 
 class Grid(object):
     
@@ -47,8 +52,9 @@ def recursive_brute_solver(grid):
     red_car = [x for x in grid.car_list[1:] if x.red][0]
     if red_car.start_x+red_car.length == len(grid.grid):
         return [grid.grid]
-    
-    for car in grid.car_list:
+    temp_car_list = deepcopy(grid.car_list)
+    random.shuffle(temp_car_list)
+    for car in temp_car_list:
         if car != 'placeholder':
             if car.orientation == 'hor':
                 if car.start_x > 0:
@@ -58,9 +64,11 @@ def recursive_brute_solver(grid):
                         new_grid.update_value(car.start_x+car.length-1, car.start_y, 0)
                         new_grid.update_value(car.start_x-1, car.start_y, value)
                         new_grid.car_list[value].start_x -= 1
-                        temp = recursive_brute_solver(new_grid)
-                        if temp:
-                            return temp + [grid.grid]
+                        done_states.append(grid.grid)
+                        if new_grid.grid not in done_states:
+                            temp = recursive_brute_solver(new_grid)
+                            if temp:
+                                return temp + [grid.grid]
                         
                 if car.start_x + car.length < len(grid.grid[0]):
                     if grid.retrieve_value(car.start_x+car.length, car.start_y) == 0:
@@ -69,9 +77,11 @@ def recursive_brute_solver(grid):
                         new_grid.update_value(car.start_x+car.length, car.start_y, value)
                         new_grid.update_value(car.start_x, car.start_y, 0)
                         new_grid.car_list[value].start_x += 1
-                        temp = recursive_brute_solver(new_grid)
-                        if temp:
-                            return temp
+                        done_states.append(grid.grid)
+                        if new_grid.grid not in done_states:
+                            temp = recursive_brute_solver(new_grid)
+                            if temp:
+                                return temp + [grid.grid]
                         
             elif car.orientation == 'vert':
                 if car.start_y > 0:
@@ -81,9 +91,11 @@ def recursive_brute_solver(grid):
                         new_grid.update_value(car.start_x, car.start_y+car.length-1, 0)
                         new_grid.update_value(car.start_x, car.start_y-1, value)
                         new_grid.car_list[value].start_y -= 1
-                        temp = recursive_brute_solver(new_grid)
-                        if temp:
-                            return temp
+                        done_states.append(grid.grid)
+                        if new_grid.grid not in done_states:
+                            temp = recursive_brute_solver(new_grid)
+                            if temp:
+                                return temp + [grid.grid]
                         
                 if car.start_y + car.length < len(grid.grid):
                     if grid.retrieve_value(car.start_x, car.start_y+car.length) == 0:
@@ -92,7 +104,12 @@ def recursive_brute_solver(grid):
                         new_grid.update_value(car.start_x, car.start_y+car.length, value)
                         new_grid.update_value(car.start_x, car.start_y, 0)
                         new_grid.car_list[value].start_y += 1
-                        temp = recursive_brute_solver(new_grid)
-                        if temp:
-                            return temp
-print(recursive_brute_solver(grid))
+                        done_states.append(grid.grid)
+                        if new_grid.grid not in done_states:
+                            temp = recursive_brute_solver(new_grid)
+                            if temp:
+                                return temp + [grid.grid]
+                                
+temp = recursive_brute_solver(grid)
+print(len(temp))
+print(temp)
