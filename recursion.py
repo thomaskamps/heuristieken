@@ -18,7 +18,17 @@ def recursive_brute_solver(grid):
     random.shuffle(temp_car_list)
     for car in temp_car_list:
         if car != 'placeholder':
+            
+            
             car_n = grid.retrieve_value(car.start_x, car.start_y)
+            
+            """
+            car_n = 1
+            if grid.check_move_car(car_n, 1) == False:
+            	if grid.check_move_car(car_n, -1) == False:
+            		car_n = grid.retrieve_value(car.start_x, car.start_y)
+			"""
+            
             if grid.check_move_car(car_n, 1):
                 new_grid = deepcopy(grid)
                 new_grid.move_car(car_n, 1)
