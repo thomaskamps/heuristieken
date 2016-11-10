@@ -55,7 +55,7 @@ if __name__ == '__main__':
     parse.add_argument('--print', dest='printer', action='store_true')
     parse.set_defaults(printer=False)
 
-    parse.add_argument('--vis', dest='visual', action='store_true')
+    parse.add_argument('--visual', dest='visual', action='store_true')
     parse.set_defaults(visual=False)
 
     args = parse.parse_args(sys.argv[1:])
