@@ -19,15 +19,7 @@ def recursive_brute_solver(grid):
     for car in temp_car_list:
         if car != 'placeholder':
             
-            
             car_n = grid.retrieve_value(car.start_x, car.start_y)
-            
-            """
-            car_n = 1
-            if grid.check_move_car(car_n, 1) == False:
-            	if grid.check_move_car(car_n, -1) == False:
-            		car_n = grid.retrieve_value(car.start_x, car.start_y)
-			"""
             
             if grid.check_move_car(car_n, 1):
                 new_grid = deepcopy(grid)
@@ -55,7 +47,7 @@ if __name__ == '__main__':
     parse.add_argument('--print', dest='printer', action='store_true')
     parse.set_defaults(printer=False)
 
-    parse.add_argument('--vis', dest='visual', action='store_true')
+    parse.add_argument('--visual', dest='visual', action='store_true')
     parse.set_defaults(visual=False)
 
     args = parse.parse_args(sys.argv[1:])
