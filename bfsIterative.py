@@ -31,7 +31,7 @@ def bfsIter(grid):
 					new_grid.move_car(car_n, 1)
 					if new_grid.grid not in done_states:
 						red_car = [x for x in grid.car_list[1:] if x.red][0]
-						if red_car.start_x+red_car.length == len(grid.grid):
+						if new_grid.check_solution():
 							pre_grid[new_grid] = grid
 							return (new_grid, pre_grid)
 						done_states.append(new_grid.grid)
@@ -43,7 +43,7 @@ def bfsIter(grid):
 					new_grid.move_car(car_n, -1)
 					if new_grid.grid not in done_states:
 						red_car = [x for x in new_grid.car_list[1:] if x.red][0]
-						if red_car.start_x+red_car.length == len(grid.grid):
+						if new_grid.check_solution():
 							pre_grid[new_grid] = grid
 							return (new_grid, pre_grid)
 						done_states.append(new_grid.grid)

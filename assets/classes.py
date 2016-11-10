@@ -79,7 +79,18 @@ class Grid(object):
                         return True
 
         return False
-	    
+
+    def check_solution(self):
+        red_car = [x for x in self.car_list[1:] if x.red][0]
+        if red_car.start_x+red_car.length == len(self.grid):
+            return True
+        no_path = False
+        for i in range(red_car.start_x+red_car.length, len(self.grid)):
+            if self.grid[red_car.start_y][i] != 0:
+                no_path = True
+                return False
+        if no_path == False:
+            return True
     
 
 class Car(object):
