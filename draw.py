@@ -30,6 +30,7 @@ def draw_solution(grids):
 		return True
 
 	draw_grid(grids[i])
+	pygame.display.update()
 
 	while True:
 		for event in pygame.event.get():
