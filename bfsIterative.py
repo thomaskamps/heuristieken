@@ -4,6 +4,7 @@ import random
 import os
 import argparse
 import Queue
+from draw import draw_solution
 
 execfile(os.getcwd() + '/assets/classes.py')
 sys.setrecursionlimit(150000000)
@@ -82,3 +83,6 @@ if __name__ == '__main__':
     	currentGrid = mothersGrids[currentGrid]
 
     print(len(stateList))
+
+    if args.visual:
+    	draw_solution(stateList)
