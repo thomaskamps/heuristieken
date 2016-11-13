@@ -1,0 +1,71 @@
+%%source: https://www.overleaf.com/latex/examples/example-of-elsevier-article-template-with-dummy-text/qfscmwntknmq#.WChtv3dx_fY
+
+\documentclass[preprint,12pt]{elsarticle}
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{lineno}
+
+\begin{document}
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+\title{Rush Hour}
+\author{Martijn de Jong, Thomas Kamps, Rick Vergunst}
+
+\begin{abstract}
+Abstracttekst komt hier
+\end{abstract}
+
+\begin{keyword}
+Rush Hour \sep Heuristieken \sep Breadth-First Search
+\end{keyword}
+
+\end{frontmatter}
+
+
+\section{The First Section}
+\label{S:1}
+Hoofdtekst komt hier
+
+\begin{itemize}
+\item Bullet point one
+\item Bullet point two
+\end{itemize}
+
+\begin{enumerate}
+\item Numbered list item one
+\item Numbered list item two
+\end{enumerate}
+
+\subsection{Subsection One}
+Subsectie tekst komt hier
+
+\begin{table}[h]
+\centering
+\begin{tabular}{l l l}
+\hline
+\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
+\hline
+Treatment 1 & 0.0003262 & 0.562 \\
+Treatment 2 & 0.0015681 & 0.910 \\
+Treatment 3 & 0.0009271 & 0.296 \\
+\hline
+\end{tabular}
+\caption{Table caption}
+\end{table}
+
+\begin{figure}[h]
+\centering\includegraphics[width=0.4\linewidth]{placeholder}
+\caption{Figure caption}
+\end{figure}
+
+\begin{equation}
+\label{eq:emc}
+e = mc^2
+\end{equation}
+
+\section{The Second Section}
+\label{S:2}
+
+\end{document}
