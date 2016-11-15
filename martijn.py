@@ -55,7 +55,7 @@ def bfsIter(grid):
 						done_states.append(new_grid.grid)
 						queue.put(new_grid)
 						pre_grid[new_grid] = grid
-
+	
 	return "No solution"
 
 if __name__ == '__main__':
