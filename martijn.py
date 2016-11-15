@@ -36,9 +36,13 @@ def bfsIter(grid):
 					if new_grid.grid not in done_states:
 						red_car = [x for x in grid.car_list[1:] if x.red][0]
 						if new_grid.check_solution():
-							pre_grid[new_grid] = grid
-							print("Time: %s seconds" % (time.time() - start_time))
-							return (new_grid, pre_grid)
+							if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
+								done_states.append(new_grid.grid)
+								queue.put(new_grid)
+								pre_grid[new_grid] = grid
+							else:
+								pre_grid[new_grid] = grid
+								return (new_grid, pre_grid)
 						done_states.append(new_grid.grid)
 						queue.put(new_grid)
 						pre_grid[new_grid] = grid
@@ -49,13 +53,17 @@ def bfsIter(grid):
 					if new_grid.grid not in done_states:
 						red_car = [x for x in new_grid.car_list[1:] if x.red][0]
 						if new_grid.check_solution():
-							pre_grid[new_grid] = grid
-							print("Time: %s seconds" % (time.time() - start_time))
-							return (new_grid, pre_grid)
+							if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
+								done_states.append(new_grid.grid)
+								queue.put(new_grid)
+								pre_grid[new_grid] = grid
+							else:
+								pre_grid[new_grid] = grid
+								return (new_grid, pre_grid)
 						done_states.append(new_grid.grid)
 						queue.put(new_grid)
 						pre_grid[new_grid] = grid
-	
+
 	return "No solution"
 
 if __name__ == '__main__':

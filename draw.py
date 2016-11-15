@@ -47,7 +47,7 @@ def draw_solution(grids):
             i = i + 1
             window.fill(pygame.Color("black"))
             window.blit(textfont.render("Move:", 1, (255,255,255)), (screen_width + margin, margin))
-            window.blit(textfont.render(str(i), 1, (255,255,255)), (screen_width + margin, margin+30))
+            window.blit(textfont.render(str(i) + " / " + str(len(grids)-1), 1, (255,255,255)), (screen_width + margin, margin+30))
         draw_grid(grids[i])
 
         pygame.time.delay(delay)
