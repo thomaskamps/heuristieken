@@ -1,71 +1,69 @@
-%%source: https://www.overleaf.com/latex/examples/example-of-elsevier-article-template-with-dummy-text/qfscmwntknmq#.WChtv3dx_fY
+\documentclass[a4paper]{article}
 
-\documentclass[preprint,12pt]{elsarticle}
+%% Language and font encodings
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+
+%% Sets page size and margins
+\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+
+%% Useful packages
+\usepackage{amsmath}
 \usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{lineno}
-
-\begin{document}
-\begin{frontmatter}
-
-%% Title, authors and addresses
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
 \title{Rush Hour}
 \author{Martijn de Jong, Thomas Kamps, Rick Vergunst}
 
+\begin{document}
+\maketitle
+
 \begin{abstract}
-Abstracttekst komt hier
+Your abstract.
+
+\vspace{5mm}
+\textbf{Keywords:} Rush Hour, Heuristieken, Breadth-First Search
 \end{abstract}
 
-\begin{keyword}
-Rush Hour \sep Heuristieken \sep Breadth-First Search
-\end{keyword}
+\section{Introduction}
+\textit{relevantie, interesseren, aanleiding, scope, referenties}
 
-\end{frontmatter}
+Dit onderzoeksverslag in een beschrijving van het proces dat doorlopen is tijdens vak Heuristieken aan de Universiteit van Amsterdam. Het doel van dit onderzoek is het leren benaderen, beschrijven, categorieseren en daardoor uiteindelijk oplossen van een complex probleem. Het vakgebied heursitieken (Grieks: heuriskein = vinden) is de wetenschap die zich bezig houdt met het vinden van oplsossingen voor deze zeer complexe problemen. In de praktijk is dit bijvoorbeeld terug te zien in de computerbeveiliging, waarbij nu nog onoplosbare problemen gebruikt worden om bijvoorbeeld betaalverkeer te versleutelen.
+
+\section{Rush Hour}
+Het spel Rush Hour is een schuifpuzzel dat ontwikkeld is door Nobuyuki Yoshigahara in de jaren zeventig en op de markt gebracht door Thinkfun. Het speelbord heeft een raster van 6 bij 6 waarop auto's en vrachtwagens geplaatst zijn met respectievelijk een lengte van 2 en 3. Deze voertuigen kunnen zowel horizontaal als verticaal op het raster geplaatst worden. Op de derde rij vindt zich aan de rechter kant een uitgang waar een auto het speelbord kan verlaten. Elk begin bord bevat één rode auto horizontaal geplaatst op de derde rij. Daarnaast zijn er een variabel aantal auto's en vrachtwagens op dit raster geplaatst in beide orientaties. Elk voertuig kan zowel vooruit als achteruit bewegen in de orientatie waarin dit voertuig staat. Digagonaal verplaatsen is dus niet toegestaan. Verplaatsing van een voertuig kan ook niet als het voertuig gehinderd wordt door een ander voertuig. Het doel is om de rode auto door de uitgang uit het speelbord te laten rijden. 
+
+\subsection{Probleem beschrijving}
+\textit{Beschrijving probleem. probleemsets, problemspace}
+
+\subsection{Opdracht}
+Deze opdracht zoals gegeven bij het vak Heuristieken bestaat uit verschillende delen. Opdracht 1 bestaat uit het oplossen van drie gegeven 6 bij 6 speelborden. Dit mag door middel van een script gebeuren, maar ook met de hand. De tweede opdracht bestaat uit drie speelborden van 9 bij 9. Deze borden moeten worden opgelost doormiddel van een eigen geschreven script. Hierbij geldt dat een oplossing met minder stappen een betere oplossing is. Opdracht 3 bestaat uit één bord van 12 bij 12 waarbij het draait om het optimaliseren van je script van oprdacht twee. Deze beginborden zijn te vinden in de \textbf{apendix}. Tot slot is er nog een extra opdracht waarbij gekeken moet worden naar de factoren die de moeilijkheidsgraad van een spelbord bepalen. Hierbij kunnen verschillende spelborden met dezelfde afmeting vergeleken worden.
+
+\section{Algoritmen}
+Voor het oplossen van de spelborden is gekeken naar zowel diverse bestaande algoritmen als zelfbedachte proceduren. Er is begonnen met de simpele regel dat de rode auto altijd 1 stap naar voren beweegt. Indien deze gehinderd wordt, beweegt de auto waardoor deze hinderd wordt 1 stap. Dit gaat door totdat de rode auto een stap naar voren kan bewegen. Deze procedure heeft echter een aantal beperkingen zoals een loop waarin het script tercht kan komen waarbij meerdere auto's continu in dezelfde volgorde dezelfde stap zetten. Dit is eventueel op te lossen met het bijhouden van een archief. Daarnaast is het in de praktijk soms ook nodig om de rode auto naar achter te bewegen of te laten staan om andere auto's te laten passeren. Ook is gekeken naar voorrang voor vrachtwagens op de auto's bij bewgen, maar hierbij hetzelfde probleem. Vervolgens zijn diverse bestaande algoritmen onderzocht en uitgewerkt.
+
+\subsection{Depth-First Search}
+Het depth-first search (DFS) algoritme werkt langs een boomstructuur\textbf{(mogen we het zo noemen?)} en werkt de takken één voor één uit. Vanuit het start spelbord, de beginstaat, worden voor elke mogelijke beweging van elk voertuig een apart spelbord gecreerd, een nieuwe staat. Deze spelborden vormen de kinderen van het beginspelbord. Deze spelborden worden op een stapel geplaatst, waarbij vervolgens ditzelfde proces herhaalt voor het eerste element van de stapel. Elke staat wordt bijgehouden in een archief, zodat lager in de boomstructuur nooit een staat voorkomt die al eerder bereikt is. Dit is noodzakelijk zodat er geen loops kunnen ontstaan en omdat de staat al eerder bereikt is met een korter pad, waardoor een mogelijk gevonden oplossing een onnodig lang pad heeft. Indien een bereikte staat geen  kinderen heeft die niet eerder bereikt zijn, wordt er een stap terug gedaan in de boomstructuur en gaat het proces verder voor het tweede element van de stapel op dat niveau in de boomstructuur.
+
+	Dit algoritme is in twee varianten toegepast, zowel iteratief als recursief. Bij de iteratieve aanpak wordt de herhaling een gedeelte van de code herhaald door middel van een 'while loop'. Bij de recursieve aanpak roept de functie zichzelf aan indien nieet aan de voorwaarde voor een oplossing wordt voldaan. 
+    
+    Een voordeel van dit brute-force algoritme is dat het compleet is en dus voor elke input een oplossing terug geeft of aangeeft dat er geen oplossing is. Door het gebruik van een archief kan er ook backtracking plaatsvinden waardoor de stap terug gedaan kan worden en indien een oplossing gevonden is het pad naar de oplossing te herleiden is.  
+	
+\subsection{Breadth-First Search}
+
+\subsection{A*}
+
+\section{Uitwerking}
 
 
-\section{The First Section}
-\label{S:1}
-Hoofdtekst komt hier
+\section{Visualisatie}
 
-\begin{itemize}
-\item Bullet point one
-\item Bullet point two
-\end{itemize}
 
-\begin{enumerate}
-\item Numbered list item one
-\item Numbered list item two
-\end{enumerate}
+ \cite{greenwade93}. 
 
-\subsection{Subsection One}
-Subsectie tekst komt hier
-
-\begin{table}[h]
-\centering
-\begin{tabular}{l l l}
-\hline
-\textbf{Treatments} & \textbf{Response 1} & \textbf{Response 2}\\
-\hline
-Treatment 1 & 0.0003262 & 0.562 \\
-Treatment 2 & 0.0015681 & 0.910 \\
-Treatment 3 & 0.0009271 & 0.296 \\
-\hline
-\end{tabular}
-\caption{Table caption}
-\end{table}
-
-\begin{figure}[h]
-\centering\includegraphics[width=0.4\linewidth]{placeholder}
-\caption{Figure caption}
-\end{figure}
-
-\begin{equation}
-\label{eq:emc}
-e = mc^2
-\end{equation}
-
-\section{The Second Section}
-\label{S:2}
+\bibliographystyle{alpha}
+\bibliography{sample}
 
 \end{document}

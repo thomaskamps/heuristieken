@@ -30,39 +30,42 @@ def bfsIter(grid):
 			if car != 'placeholder':
 				car_n = grid.retrieve_value(car.start_x, car.start_y)
 				
-				if grid.check_move_car(car_n, 1):
-					new_grid = deepcopy(grid)
-					new_grid.move_car(car_n, 1)
-					if new_grid.grid not in done_states:
-						red_car = [x for x in grid.car_list[1:] if x.red][0]
-						if new_grid.check_solution():
-							if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
-								done_states.append(new_grid.grid)
-								queue.put(new_grid)
-								pre_grid[new_grid] = grid
-							else:
-								pre_grid[new_grid] = grid
-								return (new_grid, pre_grid)
-						done_states.append(new_grid.grid)
-						queue.put(new_grid)
-						pre_grid[new_grid] = grid
-
-				if grid.check_move_car(car_n, -1):
-					new_grid = deepcopy(grid)
-					new_grid.move_car(car_n, -1)
-					if new_grid.grid not in done_states:
-						red_car = [x for x in new_grid.car_list[1:] if x.red][0]
-						if new_grid.check_solution():
-							if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
-								done_states.append(new_grid.grid)
-								queue.put(new_grid)
-								pre_grid[new_grid] = grid
-							else:
-								pre_grid[new_grid] = grid
-								return (new_grid, pre_grid)
-						done_states.append(new_grid.grid)
-						queue.put(new_grid)
-						pre_grid[new_grid] = grid
+				#print car.start_y, " + ", car.length, " = ", car.start_y+car.length
+				if 3 in range(car.start_y, car.start_y+car.length) and car.orientation == 'vert':
+					if grid.check_move_car(car_n, 1):
+						print str(car_n) + str(range(car.start_y, car.start_y+car.length))
+						new_grid = deepcopy(grid)
+						new_grid.move_car(car_n, 1)
+						if new_grid.grid not in done_states:
+							red_car = [x for x in grid.car_list[1:] if x.red][0]
+							if new_grid.check_solution():
+								if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
+									done_states.append(new_grid.grid)
+									queue.put(new_grid)
+									pre_grid[new_grid] = grid
+								else:
+									pre_grid[new_grid] = grid
+									return (new_grid, pre_grid)
+							done_states.append(new_grid.grid)
+							queue.put(new_grid)
+							pre_grid[new_grid] = grid
+	
+					if grid.check_move_car(car_n, -1):
+						new_grid = deepcopy(grid)
+						new_grid.move_car(car_n, -1)
+						if new_grid.grid not in done_states:
+							red_car = [x for x in new_grid.car_list[1:] if x.red][0]
+							if new_grid.check_solution():
+								if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
+									done_states.append(new_grid.grid)
+									queue.put(new_grid)
+									pre_grid[new_grid] = grid
+								else:
+									pre_grid[new_grid] = grid
+									return (new_grid, pre_grid)
+							done_states.append(new_grid.grid)
+							queue.put(new_grid)
+							pre_grid[new_grid] = grid
 
 	return "No solution"
 
