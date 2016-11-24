@@ -1,3 +1,14 @@
+from copy import deepcopy
+import sys
+import random
+import os
+import argparse
+import Queue
+from draw import draw_solution
+
+# Import classes
+execfile(os.getcwd() + '/assets/classes.py')
+
 
 grid = Grid(9, 9)
 grid.add_car(Car('hor', 2, 1, 4, red=True))
@@ -23,4 +34,8 @@ grid.add_car(Car('hor', 2, 5, 8))
 grid.add_car(Car('hor', 3, 6, 1))
 grid.add_car(Car('hor', 2, 7, 8))
 
+print grid.grid
 
+
+draw_solution([grid.grid])
+  
