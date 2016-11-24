@@ -10,7 +10,16 @@ from draw import draw_solution
 execfile(os.getcwd() + '/assets/classes.py')
 sys.setrecursionlimit(150000000)
 
-done_states = []
+done_states = set([])
+
+def hash(grid):
+	numberList = []
+	for row in grid:
+		for element in row:
+			numberList.append(element)
+	number  = int(''.join(map(str,numberList)))
+	
+	return number
 
 def bfsIter(grid):
 	start_time = time.time()
@@ -19,7 +28,7 @@ def bfsIter(grid):
 
 	queue.put(grid)
 
-	done_states.insert(0,grid.grid)
+	done_states.add(hash(grid.grid))
 
 	pre_grid = {}
 
@@ -33,36 +42,36 @@ def bfsIter(grid):
 				if grid.check_move_car(car_n, 1):
 					new_grid = deepcopy(grid)
 					new_grid.move_car(car_n, 1)
-					if new_grid.grid not in done_states:
+					if hash(new_grid.grid) not in done_states:
 						red_car = [x for x in grid.car_list[1:] if x.red][0]
 						if new_grid.check_solution():
 							if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
-								done_states.insert(0, new_grid.grid)
+								done_states.add(hash(new_grid.grid))
 								queue.put(new_grid)
 								pre_grid[new_grid] = grid
 							else:
 								pre_grid[new_grid] = grid
 								print("Time: %s seconds" % (time.time() - start_time))
 								return (new_grid, pre_grid)
-						done_states.insert(0, new_grid.grid)
+						done_states.add(hash(new_grid.grid))
 						queue.put(new_grid)
 						pre_grid[new_grid] = grid
 
 				if grid.check_move_car(car_n, -1):
 					new_grid = deepcopy(grid)
 					new_grid.move_car(car_n, -1)
-					if new_grid.grid not in done_states:
+					if hash(new_grid.grid) not in done_states:
 						red_car = [x for x in new_grid.car_list[1:] if x.red][0]
 						if new_grid.check_solution():
 							if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
-								done_states.insert(0, new_grid.grid)
+								done_states.add(hash(new_grid.grid))
 								queue.put(new_grid)
 								pre_grid[new_grid] = grid
 							else:
 								pre_grid[new_grid] = grid
 								print("Time: %s seconds" % (time.time() - start_time))
 								return (new_grid, pre_grid)
-						done_states.insert(0, new_grid.grid)
+						done_states.add(hash(new_grid.grid))
 						queue.put(new_grid)
 						pre_grid[new_grid] = grid
 
