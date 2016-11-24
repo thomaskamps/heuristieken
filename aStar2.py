@@ -123,15 +123,21 @@ if __name__ == '__main__':
     parse.add_argument('--vis', dest='visual', action='store_true')
     parse.set_defaults(visual=False)
 
+    parse.add_argument('--time', dest='time', action='store_true')
+    parse.set_defaults(time=False)
+
     args = parse.parse_args(sys.argv[1:])
 
     execfile(os.getcwd() + '/configs/' + str(args.config) + '.py')
-    start = time.clock()
+    if args.time:
+        start = time.clock()
+    
+    # Run algorithm and store return values
     temp = aStar(grid)
-    end = time.clock()
-    print end-start
-    if args.printer:
-        print(temp[0].grid)
+
+    if args.time:
+        end = time.clock()
+        print end - start
 
     finalGrid = temp[0]
     mothersGrids = temp[1]
