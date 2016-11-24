@@ -5,6 +5,7 @@ import os
 import argparse
 import Queue
 from draw import draw_solution
+import time
 
 # Import classes
 execfile(os.getcwd() + '/assets/classes.py')
@@ -97,13 +98,23 @@ if __name__ == '__main__':
     parse.add_argument('--visual', dest='visual', action='store_true')
     parse.set_defaults(visual=False)
 
+    parse.add_argument('--time', dest='time', action='store_true')
+    parse.set_defaults(time=False)
+
     args = parse.parse_args(sys.argv[1:])
 	
 	# Load selected config and construct grid
     execfile(os.getcwd() + '/configs/' + str(args.config) + '.py')
 
+    if args.time:
+    	start = time.clock()
+    
     # Run algorithm and store return values
     temp = bfs(grid)
+
+    if args.time:
+    	end = time.clock()
+    	print end - start
 
 	# Construct statelist (shortest path)
     state_list = []
