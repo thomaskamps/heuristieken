@@ -5,71 +5,69 @@ import os
 import argparse
 import Queue
 from draw import draw_solution
-import time
 
 # Import classes
-execfile(os.getcwd() + '/assets/classes.py')
+execfile(os.getcwd() + '/assets/newClasses.py')
 
-def bfs(grid):
+def bfs(grid, car_list):
 	"""
 	Breadth First Search solver for the Rush Hour board game
 	"""
 	
 	# Init vars etc.
-	done_states = []
 	queue = Queue.Queue()
-	queue.put(grid)
-	done_states.insert(0,grid.grid)
+	queue.put((grid, car_list))
 	pre_grid = {}
+	pre_grid[str(grid)] = "finished"
 
 	# Main loop
 	while queue:
 		
 		# Take first grid from queue
-		grid = queue.get()
+		get_grid = queue.get()
+		gridObj = Grid(get_grid[0], get_grid[1])
 		
-		# Check for all carss in the grid if there are moves possible
-		for car in grid.car_list:
+		# Check for all cars in the grid if there are moves possible
+		for car in get_grid[1]:
 		
 			# Skip the placeholder car
 			if car != 'placeholder':
 			
 				# Find the car number
-				car_n = grid.retrieve_value(car.start_x, car.start_y)
+				car_n = gridObj.retrieve_value(car[2], car[3])
 				
 				# Function for moving the car, checking for solution and creating new states
 				def move_car(move):
 					
 					# Check if move is possible
-					if grid.check_move_car(car_n, move):
+					if gridObj.check_move_car(car_n, move):
 					
 						# Create copy of grid and move the car in the new grid
-						new_grid = deepcopy(grid)
-						new_grid.move_car(car_n, move)
+						newGridObj = Grid([x[:] for x in get_grid[0]], get_grid[1][:])
+						newGridObj.move_car(car_n, move)
+						newGridObjGridStr = str(newGridObj.grid)
 						
 						# Check if grid has already existed
-						if new_grid.grid not in done_states:
+						if newGridObjGridStr not in pre_grid:
 							
 							# Check for solution (clear path to endpoint)
-							if new_grid.check_solution():
+							if newGridObj.check_solution():
 								
 								# Check if red car is at the endpoint
-								if new_grid.car_list[1].start_x != (len(new_grid.grid[0])-2):
+								if newGridObj.car_list[1][2] != (len(newGridObj.grid[0])-2):
 									
 									# Add grid to queue to be further processed
-									done_states.insert(0, new_grid.grid)
-									queue.put(new_grid)
-									pre_grid[new_grid] = grid
+									queue.put((newGridObj.grid, newGridObj.car_list))
+									pre_grid[newGridObjGridStr] = get_grid[0][:]
 								
 								# Return and finish algorithm
 								else:
-									pre_grid[new_grid] = grid
-									return (new_grid, pre_grid)
+									pre_grid[newGridObjGridStr] = get_grid[0][:]
+									return (newGridObj, pre_grid)
 							
 							# Add state to queue to be further processed
-							done_states.insert(0, new_grid.grid)
-							queue.put(new_grid)
-							pre_grid[new_grid] = grid
+							queue.put((newGridObj.grid, newGridObj.car_list))
+							pre_grid[newGridObjGridStr] = get_grid[0][:]
 				
 				# Try to move selected car both ways
 				returned = move_car(1)
@@ -98,33 +96,24 @@ if __name__ == '__main__':
     parse.add_argument('--visual', dest='visual', action='store_true')
     parse.set_defaults(visual=False)
 
-    parse.add_argument('--time', dest='time', action='store_true')
-    parse.set_defaults(time=False)
-
     args = parse.parse_args(sys.argv[1:])
 	
 	# Load selected config and construct grid
-    execfile(os.getcwd() + '/configs/' + str(args.config) + '.py')
+    execfile(os.getcwd() + '/configsAlt/' + str(args.config) + '.py')
 
-    if args.time:
-    	start = time.clock()
-    
     # Run algorithm and store return values
-    temp = bfs(grid)
-
-    if args.time:
-    	end = time.clock()
-    	print end - start
+    temp = bfs(grid.grid, grid.car_list)
 
 	# Construct statelist (shortest path)
     state_list = []
     state_list.append(temp[0].grid)
-    current_grid = temp[0]
+    current_grid = temp[0].grid
     print len(temp[1])
 
-    while current_grid.grid != grid.grid:
-    	state_list.append(temp[1][current_grid].grid)
-    	current_grid = temp[1][current_grid]
+    while current_grid != grid.grid:
+    	temper = temp[1][str(current_grid)]
+    	state_list.append(temper)
+    	current_grid = temper
     
     # If print is passed as argument, print number of moves
     if args.printer:
