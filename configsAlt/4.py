@@ -22,6 +22,6 @@ grid.add_car(Car('hor', 3, 5, 3))
 grid.add_car(Car('hor', 3, 5, 5))
 grid.add_car(Car('hor', 2, 5, 8))
 grid.add_car(Car('hor', 3, 6, 1))
-grid.add_car(Car('hor', 2, 6, 7))
+grid.add_car(Car('hor', 2, 7, 8))
 
 
