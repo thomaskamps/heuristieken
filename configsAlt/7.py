@@ -1,5 +1,8 @@
-grid = Grid(12, 12)
-grid.add_car(Car('hor', 2, 2, 5, red=True))
+grid_grid = [[0 for i in range(12)] for j  in range(12)]
+grid_car_list = ['placeholder']
+grid = Grid(grid_grid, grid_car_list)
+
+grid.add_car(Car('hor', 2, 2, 5)) # red car
 grid.add_car(Car('vert', 2, 0, 0))
 grid.add_car(Car('vert', 3, 0, 3))
 grid.add_car(Car('vert', 3, 1, 3))

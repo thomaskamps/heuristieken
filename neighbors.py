@@ -46,4 +46,5 @@ def find_neighbors(grid, carnumber):
 	print "------------------------"			
 
 	return neighborsdict[carnumber]
+
 find_neighbors([[6, 6, 7, 7, 4, 0], [8, 8, 9, 9, 4, 0], [0, 0, 0, 0, 1, 1], [10, 10, 0, 11, 11, 5], [2, 12, 12, 3, 0, 5], [2, 13, 13, 3, 0, 5]], 1)
