@@ -55,12 +55,13 @@ def bfs(grid, car_list):
 							
 							distancetoboard = len(newGridObj.grid) - newGridObj.car_list[1][2] - newGridObj.car_list[1][1]
 							cost =  distancetoboard + get_grid[0]
+							
 							for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
 								if newGridObj.retrieve_value(i, newGridObj.car_list[1][3]) != 0:
 									if newGridObj.car_list[1][1] == 3:
-										cost != 10
-									if newGridObj.car_list[1][1] == 2:
 										cost += 1
+									if newGridObj.car_list[1][1] == 2:
+										cost += 10
 							
 							# Check for solution (clear path to endpoint)
 							if newGridObj.check_solution():
