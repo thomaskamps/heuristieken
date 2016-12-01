@@ -50,13 +50,17 @@ def bfs(grid, car_list):
 						# Check if grid has already existed
 						if newGridObjGridStr not in pre_grid:
 						
-							cost = len(newGridObj.grid) - newGridObj.car_list[1][2] - newGridObj.car_list[1][1] + get_grid[0]
-							for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
-								if newGridObj.retrieve_value(i, newGridObj.car_list[1][3]) != 0:
-									if newGridObj.car_list[1][1] == 3:
-										cost += 10
-									if newGridObj.car_list[1][1] == 2:
-										cost += 1000
+							cost = len(newGridObj.grid) - newGridObj.car_list[1][2] - newGridObj.car_list[1][1]
+							cost*= 5
+							cost -= newGridObj.grid[newGridObj.car_list[1][3]].count(0)*10
+							"""for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
+								temp = newGridObj.retrieve_value(i, newGridObj.car_list[1][3])
+								if temp != 0:
+									if newGridObj.retrieve_value(newGridObj.car_list[temp][2], newGridObj.car_list[temp][3]+newGridObj.car_list[temp][1]) == 0 or newGridObj.retrieve_value(newGridObj.car_list[temp][2], newGridObj.car_list[temp][3]-1) == 0:
+										if newGridObj.car_list[temp][1] == 3:
+											cost -= 40
+										if newGridObj.car_list[temp][1] == 2:
+											cost -= 10"""
 							
 							# Check for solution (clear path to endpoint)
 							if newGridObj.check_solution():
