@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>OMT onderzoek dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		.well_padding {
+			border: 20px solid #FFF;
+		}
+		.numRes {
+			font-size: 60px;
+			text-align: center;
+		}
+		h4, h3 {
+			text-align: center;
+		}
+		.progress {
+			height: 30px;
+			margin-top: 30px;
+			background-color: #fafafa;
+		}
+		
+		.progress-bar {
+			padding-top: 5px;
+			
+			overflow: hidden;
+		}
+		
+		.legend {
+			width: 20px;
+			height: 20px;
+			border-radius: 3px;
+			
+			display: inline-block;
+			
+			position: relative; top: 5px;
+			margin-right: 3px;
+		}
+	</style>
+	
+	<script>
+		setTimeout(function() {
+			//window.location.reload();
+		}, 60000);
+	</script>
+	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="container">
+	    
+	    <nav class="navbar navbar-default" style="margin-top:30px;">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="#">OMT onderzoek dashboard</a>
+		    </div>
+		      <ul class="nav navbar-nav navbar-right">
+			    
+			    <li><a href="http://jessesar.nl:5000/export">Ophalen dataset</a></li>
+			    
+			    <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Printversies <span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		              <li><a href="https://thomaskamps.typeform.com/to/W608HF/fallback"  target="_blank">Ophalen printversie wel DM</a></li>
+			          <li><a href="https://thomaskamps.typeform.com/to/AYyyoz/fallback"  target="_blank">Ophalen printversie geen DM</a></li>
+		          </ul>
+		        </li>
+		        
+		        <li class="dropdown">
+		        	<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Rapportages <span class="caret"></span></a>
+		            <ul class="dropdown-menu">
+			    		<li><a href="https://thomaskamps.typeform.com/report/W608HF/PoFp"  target="_blank">Bekijken rapportage wel DM</a></li>
+						<li><a href="https://thomaskamps.typeform.com/report/AYyyoz/gSaO"  target="_blank">Bekijken rapportage geen DM</a></li>
+		            </ul>
+		        </li>
+		        
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Enquetelinks <span class="caret"></span></a>
+		          <ul class="dropdown-menu">
+		            <li><a href="http://onderzoek-omt.nl/team1" target="_blank">Team 1</a></li>
+		            <li><a href="http://onderzoek-omt.nl/team2" target="_blank">Team 2</a></li>
+		            <li><a href="http://onderzoek-omt.nl/team3" target="_blank">Team 3</a></li>
+		            <li><a href="http://onderzoek-omt.nl/team4" target="_blank">Team 4</a></li>
+		            <li><a href="http://onderzoek-omt.nl/team5" target="_blank">Team 5</a></li>
+		            <li><a href="http://onderzoek-omt.nl/team6" target="_blank">Team 6</a></li>
+		          </ul>
+		        </li>
+		        
+		      </ul>
+		</nav>
+		
+	    <div class="row">
+		    <div class="well_padding text-muted" style="margin-top: -20px; margin-bottom: -20px;">
+			    <div style="background-color: #5bc0de;" class="legend"></div> <small>geen DM</small><br />
+			    <div style="background-color: #337ab7;" class="legend"></div> <small>wel DM</small><br />
+		    </div>
+		    
+		    
+		  
+		</div>
+		
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>
