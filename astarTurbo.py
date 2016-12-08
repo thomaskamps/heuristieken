@@ -57,15 +57,10 @@ def bfs(grid, car_list):
 							# Heuristic: Cost of blocking car is higher than blocking truck
 							for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
 								if newGridObj.retrieve_value(i, newGridObj.car_list[1][3]) != 0:
-<<<<<<< HEAD
 									if newGridObj.car_list[1][1] == 3:
 										cost += 10
 									if newGridObj.car_list[1][1] == 2:
 										cost += 1000
-=======
-									if newGridObj.car_list[1][1] == 2:
-										cost += 100
->>>>>>> origin/master
 							
 							# Check for solution (clear path to endpoint)
 							if newGridObj.check_solution():
