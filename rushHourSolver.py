@@ -21,6 +21,9 @@ if __name__ == '__main__':
     parse.add_argument('--visual', dest='visual', action='store_true')
     parse.set_defaults(visual=False)
 
+    # Choose the algorithm, options: a_star, bfs and best_first
+    parse.add_argument("--algo", help="algo to use", default="a_star")
+
     args = parse.parse_args(sys.argv[1:])
 	
 	# Load selected config and construct grid
@@ -28,7 +31,12 @@ if __name__ == '__main__':
     solver = Solver(grid.grid, grid.car_list)
 
     # Run algorithm and store return values
-    temp = solver.aStar(grid.grid, grid.car_list)
+    if str(args.algo) == "bfs":
+        temp = solver.bfs(grid.grid, grid.car_list)
+    elif str(args.algo) == "best_first":
+        temp = solver.best_first(grid.grid, grid.car_list)
+    else:
+        temp = solver.a_star(grid.grid, grid.car_list)
 
 	# Construct statelist (shortest path)
     state_list = []

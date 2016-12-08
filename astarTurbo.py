@@ -134,3 +134,5 @@ if __name__ == '__main__':
 	# If visual is passed as argument, draw visualisation
     if args.visual:
     	draw_solution(state_list)
+
+    print state_list
