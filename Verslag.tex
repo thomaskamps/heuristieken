@@ -6,7 +6,7 @@
 \usepackage[T1]{fontenc}
 
 %% Sets page size and margins
-\usepackage[a4paper,top=3cm,bottom=2cm,left=3cm,right=3cm,marginparwidth=1.75cm]{geometry}
+\usepackage[a4paper,top=3cm,bottom=2cm,left=2.5cm,right=2.5cm,marginparwidth=1.75cm]{geometry}
 
 %% Useful packages
 \usepackage{amsmath}
@@ -15,7 +15,20 @@
 \usepackage[colorlinks=true, allcolors=blue]{hyperref}
 
 \title{Rush Hour}
-\author{Martijn de Jong, Thomas Kamps, Rick Vergunst}
+
+\author{
+  Martijn, de Jong\\
+  \textit{martijn.dejong@mail.com}\\
+  \textit{Universiteit van Amsterdam}
+  \and
+  Thomas, Kamps\\
+  \textit{thomas@kamps.email}\\
+  \textit{Universiteit van Amsterdam}
+  \and
+  Rick, Vergunst\\
+  \textit{raikos1337@gmail.com}\\
+  \textit{Universiteit van Amsterdam}
+}
 
 \begin{document}
 \maketitle
@@ -41,7 +54,7 @@ Het spel Rush Hour is een schuifpuzzel dat ontwikkeld is door Nobuyuki Yoshigaha
 \subsection{Opdracht}
 Deze opdracht zoals gegeven bij het vak Heuristieken bestaat uit verschillende delen. Opdracht 1 bestaat uit het oplossen van drie gegeven 6 bij 6 speelborden. Dit mag door middel van een script gebeuren, maar ook met de hand. De tweede opdracht bestaat uit drie speelborden van 9 bij 9. Deze borden moeten worden opgelost doormiddel van een eigen geschreven script. Hierbij geldt dat een oplossing met minder stappen een betere oplossing is. Opdracht 3 bestaat uit één bord van 12 bij 12 waarbij het draait om het optimaliseren van je script van oprdacht twee. Deze beginborden zijn te vinden in de \textbf{apendix}. Tot slot is er nog een extra opdracht waarbij gekeken moet worden naar de factoren die de moeilijkheidsgraad van een spelbord bepalen. Hierbij kunnen verschillende spelborden met dezelfde afmeting vergeleken worden.
 
-\section{Algoritmen}
+\section{Methoden}
 Voor het oplossen van de spelborden is gekeken naar zowel diverse bestaande algoritmen als zelfbedachte proceduren. Er is begonnen met de simpele regel dat de rode auto altijd 1 stap naar voren beweegt. Indien deze gehinderd wordt, beweegt de auto waardoor deze hinderd wordt 1 stap. Dit gaat door totdat de rode auto een stap naar voren kan bewegen. Deze procedure heeft echter een aantal beperkingen zoals een loop waarin het script tercht kan komen waarbij meerdere auto's continu in dezelfde volgorde dezelfde stap zetten. Dit is eventueel op te lossen met het bijhouden van een archief. Daarnaast is het in de praktijk soms ook nodig om de rode auto naar achter te bewegen of te laten staan om andere auto's te laten passeren. Ook is gekeken naar voorrang voor vrachtwagens op de auto's bij bewgen, maar hierbij hetzelfde probleem. Vervolgens zijn diverse bestaande algoritmen onderzocht en uitgewerkt.
 
 \subsection{Depth-First Search}
@@ -53,14 +66,31 @@ Het depth-first search (DFS) algoritme werkt langs een boomstructuur en werkt de
 	
 \subsection{Breadth-First Search}
 Het Breadth-First Search (BFS) algoritme werkt ook langs een boomstructuur, net als het DFS-algoritme. In plaats van de takken stuk voor stuk uit te werken, werkt het BFS-algoritme in lagen de boomstructuur af. Vanuit het begin bord worden alle kinder staten berekend en in een rij geplaatst. Vervolgens wordt voor elk element in de rij weer de kinder staten berekend. Hierbij wordt dus het first-in-first-out principe toegepast. De 'boom' van dit algoritme groeit dus zeer snel in de breedte en niet zo snel in de diepte als bij het DFS-algoritme. 
-	Het grootste voordeel van dit algorimte is dat de eerst gevonden oplossing altijd een oplossing is met het korste pad is. Het is mogelijk dat er meer oplossingen zijn met een even lang pad, maar nooit korter. 
+	
+    Het grootste voordeel van dit algorimte is dat de eerst gevonden oplossing altijd een oplossing is met het korste pad is. Het is mogelijk dat er meer oplossingen zijn met een even lang pad, maar nooit korter. Een nadeel kan echter zijn dat dit algoritme zeer intensief is doordat met elke laag van de boom het aantal mogelijke staten zeer sterk toeneemt. Doordat voor elke staat de mogelijke kinder staten berekend worden, is dit aanzienlijk meer dan bij een DFS algoritme.
 
-\subsection{A*}
+\subsection{A* en Beam Search}
+Het A* algoritme is een variatie op het BFS algoritme waarbij heuristieken worden toegepast. Heuristieken zijn regels waarvan men vooraf niet weet of dit een verbetering zal opleveren van het algoritme bij het oplossen van een specifiek probleem. Voor elke staat wordt een prijs berekend op basis van deze heuristieken. Zo krijgt bijvoorbeeld een spelbord waarbij er drie voertuigen de weg voor de rode auto blokkeren een hogere prijs dan een spelbord waar maar één voertuig de weg blokeert. Vervolgens zullen de kinder staten van de staat met de laagste prijs berekend worden. In de volgende sectie zal er uitgebreider ingegaan worden op de verschillende heuristieken die toegepast zijn.
+	
+    Beam Search is een combinatie van alle drie bovenstaande algoritmen. Hierbij wordt in plaats van alleen de staat met de laagste prijs, van een paar staten met de laagste prijs de kinderen berekend. Van deze kinder staten worden vervolgens weer de staten met de laagste prijs verder uitgewerkt. De boom bij dit algoritme zal altijd een vooraf bepaalde breedte behouden. Ten opzichten van een BFS algoritme zal het geheugengebruik een stuk lager zijn. 
+
+\subsection{Heuristieken}
+Op verschillende eerder besproken algoritmen zijn diverse heuristieken toegepast. Een heuristiek garandeert niet altijd een optimale oplossing, maar kan wel zorgen voor een aanzienlijke afname van het aantal bekeken staten en daarmee de tijd waarin het spelbord opgelost wordt. De heuristieken die wij toegepast hebben verdelen we dan ook in twee categorieen: admissible en inadmissible. Bij het toepassen van een admissible heuristiek zal de garantie van het vinden van het pad met de laagste kosten blijven indien het algoritme dit ook grandeert. Een inadmissible heursitiek heeft deze garantie echter niet. Desondanks is er toch ook gekozen om deze heuristieken toe te passen, omdat deze bij een groter spelbord ervoor kan zorgen er in ieder geval binnen een redelijke tijd een oplossing gevonden kan worden.
+	
+    Het eerste heuristiek dat is toegepast, is de \textit{afstand van de rode auto tot de uitgang}. Hierbij wordt het aantal vakjes geteld tussen de voorkant van de rode auto en het meest rechter vakje op het bord. Om dit te berekenen is gebruik gemaakt van de begin x-coördinaat van de rode auto, de lengte van de auto en de grootte van de rij waarin de auto zich bevindt. Een spelbord waarbij de auto verder van de uitgang staat krijgt een hogere prijs. Afstand van één vakje krijgt een prijs van één, afstand van twee vakjes krijgt een prijs van twee enzovoort. Hierdoor zal met een A* algoritme of Beam Search de staat waarbij de rode auto dichter bij de uitgang is eerder uitgewerkt worden. 
+
+	Dit eerste heuristiek is gebruikt in combinatie met een ander heursitiek, \textit{aantal blokkerende voertuigen}. Dit heuristiek geeft een hogere prijs aan een spelbord indien er meerdere voertuigen de weg naar de uitgang blokkeren voor de rode auto. Een gegeven is dat er tussen de rode auto en de uitgang alleen verticaal voertuigen de weg kunnen blokkeren en nooit horizontaal. In de rij waarin de rode auto zich bevindt wordt gekeken wat de x-coördinaat van de auto is, de lengte wordt vervolgens daarbij opgeteld. Tot slot wordt gekeken of er voertuigen voor de rode auto staan die een hoger x-coördinaat hebben en hoeveel voertuigen. Voor één blokkerend voertuig wordt de prijs één, voor twee blokkerende voertuigen wordt de prijs twee, enzovoort.
+    
+    Een derde heuristiek dat toegepast is 
+    
+
+
 
 \section{Uitwerking}
 Gekozen voor Python
 
 \subsection{Grid Class}
+
 
 \subsection{Archief}
 

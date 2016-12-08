@@ -53,21 +53,27 @@ def bfs(grid, car_list):
 						# Check if grid has already existed
 						if newGridObjGridStr not in pre_grid:
 							
+							cost = get_grid[0]
+							
 							# Heuristic: Distance red car to exit
 							distancetoboard = len(newGridObj.grid) - newGridObj.car_list[1][2] - newGridObj.car_list[1][1]
-							cost =  distancetoboard + get_grid[0] 
+							cost +=  distancetoboard
 							
 							# Heuristic: Cost of blocking car is higher than blocking truck
-							for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
-								if newGridObj.retrieve_value(i, newGridObj.car_list[1][3]) != 0:
-									if newGridObj.car_list[1][1] == 2:
-										cost += 100
+							#for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
+							#	if newGridObj.retrieve_value(i, newGridObj.car_list[1][3]) != 0:
+							#		if newGridObj.car_list[1][1] == 2:
+							#			cost += 100
 							
-
+							# Heuristic: Car on the left of the grid have a lower cost than cars on the right of the gird
 							for i in range(1, len(newGridObj.car_list)):
 								extracost = ((newGridObj.car_list[i][1] + newGridObj.car_list[i][2]) * 10)
 								cost += extracost
 								
+							
+							
+							
+							
 							
 							# Check for solution (clear path to endpoint)
 							if newGridObj.check_solution():
