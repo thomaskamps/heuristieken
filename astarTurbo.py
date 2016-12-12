@@ -60,7 +60,7 @@ def bfs(grid, car_list):
 									if newGridObj.car_list[1][1] == 3:
 										cost += 10
 									if newGridObj.car_list[1][1] == 2:
-										cost += 1000
+										cost += 100
 							
 							# Check for solution (clear path to endpoint)
 							if newGridObj.check_solution():
