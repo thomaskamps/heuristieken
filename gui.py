@@ -3,6 +3,8 @@ import sys
 import random
 import os
 execfile(os.getcwd() + '/data.py')
+execfile(os.getcwd() + '/assets/solver.py')
+execfile(os.getcwd() + '/rushHourSolverGui.py')
 
 def draw_solution(grids):    
     pygame.init()
@@ -77,17 +79,19 @@ def draw_solution(grids):
     			else:
     				color2 = (37,160,161)
     			rect = pygame.draw.rect(window, (color2), (screen_width + (self.index/10 + 1) * margin + (self.index/10 - 1) * 105, 230 + margin, 105, 60))
-    			window.blit(textfont.render(self.text, 1, (255,255,255)), (screen_width + (self.index/10 + 1) * margin + (self.index/10-1) * 105 + 10, 230 + margin + 22))
+    			window.blit(textfont2.render(self.text, 1, (255,255,255)), (screen_width + (self.index/10 + 1) * margin + (self.index/10-1) * 105 + 10, 230 + margin + 22))
+    			
+    		if self.section == 4:
+				if liveModus == False:
+					color3 = (230,115,87)
+				else:
+					color3 = (101,204,156)
+				rect = pygame.draw.rect(window, (color3), (screen_width + 400 - 100 - 2 * margin, 30 + margin, 100, 60))
+				window.blit(textfont.render(self.text, 1, (255,255,255)), (screen_width + self.section*100 - 90, 3 * margin + 40))
     			
     		if self.section == 3:
     			rect = pygame.draw.rect(window, (37,160,161), (screen_width + (self.index/100 + 1) * margin + (self.index/100 - 1) * 50, 330 + margin, 50, 60))
-			window.blit(textfont.render(self.text, 1, (255,255,255)), (screen_width + (self.index/100 + 1) * margin + (self.index/100-1) * 50 + 16, 330 + margin + 22))
-			
-			if self.section == 4:
-				print "test"
-				rect = pygame.draw.rect(window, (230,115,87), (screen_width + 400 - 100 - 2 * margin, 30 + margin, 100, 60))
-				window.blit(textfont.render(self.text, 1, (255,255,255)), (screen_width + self.section*100 - 90, 3 * margin + 40))
-
+    			window.blit(textfont.render(self.text, 1, (255,255,255)), (screen_width + (self.index/100 + 1) * margin + (self.index/100-1) * 50 + 16, 330 + margin + 22))
     	
     	def pressed(self):
     		pos = pygame.mouse.get_pos()
@@ -124,8 +128,6 @@ def draw_solution(grids):
     	window.blit(textfont2.render("Cars: " + str(check_size(2)), 1, (255,255,255)), (screen_width + 3 * margin, 500 + margin))
     	window.blit(textfont2.render("Trucks: " + str(check_size(3)), 1, (255,255,255)), (screen_width + 3 * margin, 530 + margin))
     	window.blit(textfont2.render("White Space : " + str(check_size(0)), 1, (255,255,255)), (screen_width + 3 * margin, 560 + margin))
-    	#rect = pygame.draw.rect(window, (230,115,87), (screen_width + 400 - 100 - 2 * margin, 30 + margin, 100, 60))
-    	#window.blit(textfont.render("Live", 1, (255,255,255)), (screen_width + 400 - 90, 3 * margin + 40))
     
     #--------------------------------------------
     def check_size(length):
@@ -162,10 +164,14 @@ def draw_solution(grids):
     astarButton.index = 10
     astarButton.section = 2
     astarButton.text = "astar"
-    dfsButton = Button()
-    dfsButton.index = 20
-    dfsButton.section = 2
-    dfsButton.text = "dfs"
+    bestfirstButton = Button()
+    bestfirstButton.index = 20
+    bestfirstButton.section = 2
+    bestfirstButton.text = "bestfirst"
+    bfsButton = Button()
+    bfsButton.index = 30
+    bfsButton.section = 2
+    bfsButton.text = "bfs"
     
     playButton = Button()
     playButton.index = 100
@@ -219,7 +225,7 @@ def draw_solution(grids):
     
     set_controlpanel("astar", 1)
     
-    allObjects = pygame.sprite.Group(config1Button, config2Button, config3Button, config4Button, config5Button, config6Button, config7Button, astarButton, dfsButton, playButton, resetButton, previousButton, nextButton, liveButton, moveLabel, configLabel, controlLabel, algoLabel, colorButton, infoLabel)
+    allObjects = pygame.sprite.Group(config1Button, config2Button, config3Button, config4Button, config5Button, config6Button, config7Button, astarButton, bestfirstButton, bfsButton, playButton, resetButton, previousButton, nextButton, liveButton, moveLabel, configLabel, controlLabel, algoLabel, colorButton, infoLabel)
     
     #--------------------------------------------
     # Main program.
@@ -235,39 +241,54 @@ def draw_solution(grids):
         		sys.exit()
         	if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
 				if config1Button.pressed():
+					liveModus = False
 					grids = data[activeAlgo]["1"]["path"][::-1]
 					car_color(grids)
 					i = 0
 					activeGrid = 1
 				if config2Button.pressed():
+					liveModus = False
 					grids = data[activeAlgo]["2"]["path"][::-1]
 					car_color(grids)
 					i = 0
 					activeGrid = 2
 				if config3Button.pressed():
+					liveModus = False
 					grids = data[activeAlgo]["3"]["path"][::-1]
 					car_color(grids)
 					i = 0
 					activeGrid = 3
 				if config4Button.pressed():
+					liveModus = False
 					grids = data[activeAlgo]["4"]["path"][::-1]
 					car_color(grids)
 					i = 0
 					activeGrid = 4
 				if config6Button.pressed():
+					liveModus = False
 					grids = data[activeAlgo]["6"]["path"][::-1]
 					car_color(grids)
 					i = 0
 					activeGrid = 6
 				
 				if liveButton.pressed():
-					print "live"
-				
+					global liveModus
+					if liveModus == False:
+						global liveModus
+						liveModus = True
+					else:
+						global liveModus
+						liveModus = False
+					print activeGrid
+					grids = live_solver(activeAlgo, activeGrid)[0]
+									
 				if astarButton.pressed():
+					liveModus = False
 					activeAlgo = "astar"
 					grids = data[activeAlgo][str(activeGrid)]["path"][::-1]
-				if dfsButton.pressed():
-					activeAlgo = "dfs"
+				if bestfirstButton.pressed():
+					liveModus = False
+					activeAlgo = "bestfirst"
 					grids = data[activeAlgo][str(activeGrid)]["path"][::-1]
 								
 				if playButton.pressed():
