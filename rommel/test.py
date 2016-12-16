@@ -52,6 +52,15 @@ def recursive_brute_solver(grid):
     red_car = [x for x in grid.car_list[1:] if x.red][0]
     if red_car.start_x+red_car.length == len(grid.grid):
         return [grid.grid]
+    no_path = False
+    for i in range(red_car.start_x+red_car.length, len(grid.grid)):
+        if grid.grid[red_car.start_y][i] != 0:
+            no_path = True
+            break
+    if no_path == False:
+        print("Path possible")
+        print(len(pre_grid))
+        return [grid.grid]
     temp_car_list = deepcopy(grid.car_list)
     random.shuffle(temp_car_list)
     for car in temp_car_list:

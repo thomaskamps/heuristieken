@@ -1,0 +1,28 @@
+grid_grid = [[0 for i in range(9)] for j  in range(9)]
+grid_car_list = ['placeholder']
+
+grid = Grid(grid_grid, grid_car_list)
+grid.add_car(Car('hor', 2, 6, 4)) # red car
+grid.add_car(Car('vert', 2, 0, 5))
+grid.add_car(Car('vert', 2, 0, 7))
+grid.add_car(Car('vert', 2, 1, 7))
+grid.add_car(Car('vert', 2, 2, 5))
+grid.add_car(Car('vert', 3, 3, 0))
+grid.add_car(Car('vert', 2, 4, 7))
+grid.add_car(Car('vert', 2, 5, 0))
+grid.add_car(Car('vert', 3, 5, 4))
+grid.add_car(Car('vert', 2, 6, 0))
+grid.add_car(Car('vert', 2, 6, 2))
+grid.add_car(Car('vert', 3, 8, 4))
+grid.add_car(Car('vert', 2, 8, 7))
+grid.add_car(Car('hor', 3, 0, 0))
+grid.add_car(Car('hor', 2, 7, 1))
+grid.add_car(Car('hor', 2, 4, 2))
+grid.add_car(Car('hor', 2, 4, 3))
+grid.add_car(Car('hor', 2, 7, 3))
+grid.add_car(Car('hor', 3, 2, 4))
+grid.add_car(Car('hor', 2, 3, 6))
+grid.add_car(Car('hor', 2, 6, 6))
+grid.add_car(Car('hor', 2, 2, 7))
+grid.add_car(Car('hor', 3, 5, 7))
+grid.add_car(Car('hor', 2, 2, 8))

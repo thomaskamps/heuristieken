@@ -1,0 +1,11 @@
+
+grid = Grid(6, 6)
+grid.add_car(Car('hor', 2, 3, 2, red=True))
+grid.add_car(Car('vert', 3, 2, 0))
+grid.add_car(Car('vert', 3, 5, 0))
+grid.add_car(Car('vert', 3, 3, 3))
+grid.add_car(Car('vert', 2, 0, 4))
+grid.add_car(Car('hor', 2, 1, 4))
+grid.add_car(Car('hor', 2, 3, 0))
+grid.add_car(Car('hor', 2, 4, 3))
+grid.add_car(Car('hor', 2, 4, 5))
