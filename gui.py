@@ -4,7 +4,7 @@ import random
 import os
 execfile(os.getcwd() + '/data.py')
 execfile(os.getcwd() + '/assets/solver.py')
-execfile(os.getcwd() + '/rushHourSolverGui.py')
+execfile(os.getcwd() + '/gui_helper.py')
 
 def draw_solution(grids):    
     pygame.init()
