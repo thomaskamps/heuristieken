@@ -37,6 +37,8 @@ if __name__ == '__main__':
         temp = solver.best_first(grid.grid, grid.car_list)
     elif str(args.algo) == "beam":
         temp = solver.beam(grid.grid, grid.car_list)
+    elif str(args.algo) == "block":
+        temp = solver.block(grid.grid, grid.car_list)
     else:
         temp = solver.a_star(grid.grid, grid.car_list)
 

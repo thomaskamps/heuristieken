@@ -25,9 +25,30 @@ class Solver(object):
 					car_n = gridObj.retrieve_value(car[2], car[3])
 					
 					# Try to move selected car both ways
-					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "A", None)
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "A")
 					if returned:
 						return returned
+
+		return "No solution"
+
+	def block(self, grid, car_list):
+		queue, pre_grid = init_var_queue(grid, car_list, True)
+
+		while queue:
+
+			get_grid, gridObj = retrieve_grid(queue, True)
+
+			for car in get_grid[2]:
+
+				if car != 'placeholder':
+
+					# Find the car number
+						car_n = gridObj.retrieve_value(car[2], car[3])
+						
+						# Try to move selected car both ways
+						returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "Block")
+						if returned:
+							return returned
 
 		return "No solution"
 
@@ -144,7 +165,7 @@ class Solver(object):
 					car_n = gridObj.retrieve_value(car[2], car[3])
 					
 					# Try to move selected car both ways
-					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, False, None)
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, False)
 					if returned:
 						return returned
 
@@ -169,7 +190,7 @@ class Solver(object):
 					car_n = gridObj.retrieve_value(car[2], car[3])
 					
 					# Try to move selected car both ways
-					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "Best", None)
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "Best")
 					if returned:
 						return returned
 
@@ -196,7 +217,7 @@ def retrieve_grid(queue, heuristic):
 	return get_grid, gridObj
 
 # Function for moving the car, checking for solution and creating new states
-def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic, placeholder_pre_grid):
+def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic):
 	if heuristic != False:
 		num = 1
 	else:
@@ -216,8 +237,10 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic, placeho
 
 			if heuristic == "A":
 				# Heuristic: Distance red car to exit
-				distancetoboard = len(newGridObj.grid) - newGridObj.car_list[1][2] - newGridObj.car_list[1][1]
-				cost =  distancetoboard + get_grid[0] 
+				distancetoboard = red_to_end(newGridObj)
+
+				# Add the cost of the previous board
+				cost = distancetoboard + get_grid[0] 
 				
 				# Heuristic: Cost of blocking car is higher than blocking truck
 				for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
@@ -227,8 +250,28 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic, placeho
 						if newGridObj.car_list[1][1] == 2:
 							cost += 1000
 
+			if heuristic == "Block":
+				# Heuristic: Distance red car to exit
+				cost = red_to_end(newGridObj)
+
+				# Add the cost of the previous board
+				cost = cost + get_grid[0]
+
+				# Loop through the car list
+				for car in newGridObj.car_list:
+					if car != 'placeholder':
+
+						car_num = newGridObj.retrieve_value(car[2], car[3])
+						
+						# Adds cost if a car is blocked by another car, higher cost for cars above or behind
+						if newGridObj.check_move_car(car_num, 1):
+							cost += 10
+
+						if newGridObj.check_move_car(car_num, -1):
+							cost += 100
+
 			if heuristic == "Best":
-				cost = len(newGridObj.grid) - newGridObj.car_list[1][2] - newGridObj.car_list[1][1]
+				cost = red_to_end(newGridObj)
 				cost*= 5
 				cost -= newGridObj.grid[newGridObj.car_list[1][3]].count(0)*10
 			
@@ -239,10 +282,7 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic, placeho
 				if newGridObj.car_list[1][2] != (len(newGridObj.grid[0])-2):
 					
 					# Add grid to queue to be further processed
-					if placeholder_pre_grid == None:
-						queue, pre_grid = add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic)
-					else:
-						queue, placeholder_pre_grid = add_state(queue, cost, newGridObj, get_grid, placeholder_pre_grid, newGridObjGridStr, num, heuristic)
+					queue, pre_grid = add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic)
 				
 				# Return and finish algorithm
 				else:
@@ -250,10 +290,10 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic, placeho
 					return (newGridObj, pre_grid)
 			
 			# Add state to queue to be further processed
-			if placeholder_pre_grid == None:
-				queue, pre_grid = add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic)
-			else:
-				queue, placeholder_pre_grid = add_state(queue, cost, newGridObj, get_grid, placeholder_pre_grid, newGridObjGridStr, num, heuristic)
+			queue, pre_grid = add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic)
+
+def red_to_end(newGridObj):
+	return len(newGridObj.grid) - newGridObj.car_list[1][2] - newGridObj.car_list[1][1]
 
 def add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic):
 	if heuristic != False:
@@ -263,11 +303,11 @@ def add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, nu
 	pre_grid[newGridObjGridStr] = get_grid[num][:]
 	return queue, pre_grid
 
-def try_move(gridObj, car_n, get_grid, pre_grid, queue, heuristic, placeholder_pre_grid):
-	returned = move_car(1, gridObj, car_n, get_grid, pre_grid, queue, heuristic, placeholder_pre_grid)
+def try_move(gridObj, car_n, get_grid, pre_grid, queue, heuristic):
+	returned = move_car(1, gridObj, car_n, get_grid, pre_grid, queue, heuristic)
 	if returned:
 		return returned
 			
-	returned = move_car(-1, gridObj, car_n, get_grid, pre_grid, queue, heuristic, placeholder_pre_grid)
+	returned = move_car(-1, gridObj, car_n, get_grid, pre_grid, queue, heuristic)
 	if returned:
 		return returned
