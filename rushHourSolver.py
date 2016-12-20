@@ -21,8 +21,11 @@ if __name__ == '__main__':
     parse.add_argument('--visual', dest='visual', action='store_true')
     parse.set_defaults(visual=False)
 
-    # Choose the algorithm, options: a_star, bfs and best_first
+    # Choose the algorithm, options: a_star, bfs, beam and best_first
     parse.add_argument("--algo", help="algo to use", default="a_star")
+
+    # Choose the heuristics for a_star, options: 1, 2, 3, 4 (ex. 1,3)
+    parse.add_argument("--heur", help="heuristic to use", default="1,2")
 
     args = parse.parse_args(sys.argv[1:])
 	
@@ -37,10 +40,10 @@ if __name__ == '__main__':
         temp = solver.best_first(grid.grid, grid.car_list)
     elif str(args.algo) == "beam":
         temp = solver.beam(grid.grid, grid.car_list)
-    elif str(args.algo) == "block":
-        temp = solver.block(grid.grid, grid.car_list)
+    elif str(args.algo) == "dfs":
+        temp = solver.dfs(grid.grid, grid.car_list)
     else:
-        temp = solver.a_star(grid.grid, grid.car_list)
+        temp = solver.a_star(grid.grid, grid.car_list, str(args.heur))
 
 	# Construct statelist (shortest path)
     state_list = []
