@@ -41,20 +41,15 @@ if __name__ == '__main__':
         temp = solver.best_first(grid.grid, grid.car_list)
     elif str(args.algo) == "beam":
         temp = solver.beam(grid.grid, grid.car_list)
-<<<<<<< Updated upstream
     elif str(args.algo) == "dfs":
         temp = solver.dfs(grid.grid, grid.car_list)
     elif str(args.algo) == "hybrid":
         temp = solver.hybrid_beam(grid.grid, grid.car_list)
-    else:
-        temp = solver.a_star(grid.grid, grid.car_list, str(args.heur))
-=======
     elif str(args.algo) == "a_star":
-        temp = solver.a_star(grid.grid, grid.car_list)
+        temp = solver.a_star(grid.grid, grid.car_list, str(args.heur))
     else:
         print "No correct algorithm specified!"
         sys.exit(0)
->>>>>>> Stashed changes
 
 	# Construct statelist (shortest path)
     state_list = []
