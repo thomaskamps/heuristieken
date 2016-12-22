@@ -8,7 +8,7 @@ Studenten: Martijn de Jong (10774807), Thomas Kamps (10758151), Rick Vergunst (1
 ---
 
 ###Beschrijving:
-In deze repository kan je de uitwerking van de Rush Hour case vinden voor het vak Heuristieken aan de Universiteit van Amsterdam. 
+In deze repository kan je de uitwerking van de Rush Hour case vinden voor het vak Heuristieken aan de Universiteit van Amsterdam.
 
 ---
 
@@ -23,6 +23,14 @@ In deze repository kan je de uitwerking van de Rush Hour case vinden voor het va
 
 Volledige beschrijving van de opdracht:
 http://heuristieken.nl/wiki/index.php?title=Rush_Hour
+
+---
+
+###Installatie
+
+Voor het uitvoeren van alles in deze repository zijn de volgende installaties vereist:  
+1 - Python 2.7  
+2 - PyGame  
 
 ---
 
