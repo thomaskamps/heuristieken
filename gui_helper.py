@@ -81,9 +81,9 @@ def check_size(length, grids, cars):
 			for item in row:
 				if item == key:
 					vehicleSize[key] = vehicleSize[key] + 1
-		if length == 0:
-			return vehicleSize[0]
-		return len([value for key, value in vehicleSize.iteritems() if value == length])
+	if length == 0:
+		return vehicleSize[0]
+	return len([value for key, value in vehicleSize.iteritems() if value == length])
 
 
 # Function: Draw all the extra elements in the control panel.
