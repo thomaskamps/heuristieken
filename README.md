@@ -29,9 +29,8 @@ http://heuristieken.nl/wiki/index.php?title=Rush_Hour
 ###Installatie
 
 Voor het uitvoeren van alles in deze repository zijn de volgende installaties vereist:  
-1. Python 2.7  (let op: Python 2!)
-
-2. PyGame  
+* Python 2.7  (let op: Python 2!)
+* PyGame  
 
 ---
 
