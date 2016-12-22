@@ -244,7 +244,7 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic, beam):
 					for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
 						if newGridObj.retrieve_value(i, newGridObj.car_list[1][3]) != 0:
 							if newGridObj.car_list[1][1] == 3:
-								cost += 1000
+								cost += 10
 							if newGridObj.car_list[1][1] == 2:
 								cost += 100
 

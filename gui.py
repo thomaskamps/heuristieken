@@ -26,10 +26,12 @@ def draw_solution(grids):
     textfont = pygame.font.SysFont("arial", 40)
     textfont2 = pygame.font.SysFont("arial", 30)
  
+ 	# Sets the screen margins
     window = pygame.display.set_mode((screen_width + 400, screen_height + margin))
     i = 0
     delay = int(0.5 * 1000)
 
+    # Fill the gui
     cars = car_color(grids)
     draw_grid(grids[i], cars)
     
@@ -45,14 +47,16 @@ def draw_solution(grids):
     allObjects.update()
     
 
-    
+    # Loop to keep the GUI updated
     while True:
     	pygame.display.set_caption("Multi Turbo Rush Hour Solver")
+    	# Event to quit the gui
         for event in pygame.event.get():
         	if event.type == pygame.QUIT:
         		pygame.quit()
         		sys.exit()
         	
+        	# All the keyboard press handlers
         	if event.type == pygame.KEYDOWN:
         	 	if event.key == pygame.K_LEFT:
         	 		if log.animation == False and i > 0:
@@ -105,7 +109,8 @@ def draw_solution(grids):
 					else:
 						log.live = False
 					grids = live_solver(log.algo, log.grid)[0]
-									
+						
+				# Handles the selecting of new algorithms					
 				if astarButton.pressed():
 					log.live = False
 					log.algo = "astar"
@@ -138,6 +143,7 @@ def draw_solution(grids):
 					cars = {}
 					cars = car_color(grids)
 				
+				# Updates the GUI layout
 				update_screen(grids, i, cars, allObjects)
 			
         if i < len(grids) - 1 and log.animation == True:

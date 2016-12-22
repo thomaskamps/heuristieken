@@ -23,7 +23,7 @@ def update_screen(grids, i, cars, allObjects):
 	pygame.display.update()
     	
     
-# Funciton: Calls the algorithm and laods the configuration for a live calculation
+# Function: Calls the algorithm and laods the configuration for a live calculation
 def live_solver(algorithm, configuration):
 	# Load selected config and construct grid
     execfile(os.getcwd() + '/configsAlt/' + str(configuration) + '.py', globals())
@@ -51,7 +51,7 @@ def live_solver(algorithm, configuration):
     return [state_list[::-1], len(temp[1])]
 
 
-# Function: Create a dictionary that contains for everey car a color code.
+# Function: Create a dictionary that contains a color code for every car.
 def car_color(currentGrid):
     	cars = {}
     	cars[0], cars[1] = (255, 255, 255), (255, 0, 0)
@@ -210,6 +210,7 @@ class Button(pygame.sprite.Sprite):
     		self.section = 1
     		self.text = ""
     		
+        # Function: Updates the color of a button    
     	def update(self):
     		
     		if self.section == 1:
@@ -240,6 +241,7 @@ class Button(pygame.sprite.Sprite):
     			rect = pygame.draw.rect(window, (37,160,161), (screen_width + (self.index/100 + 1) * margin + (self.index/100 - 1) * 50, 330 + margin, 50, 60))
     			window.blit(textfont.render(self.text, 1, (255,255,255)), (screen_width + (self.index/100 + 1) * margin + (self.index/100-1) * 50 + 16, 330 + margin + 22))
     	
+        # Function that draws a rect to imitating the pressing of a button
     	def pressed(self):
     		pos = pygame.mouse.get_pos()
     		if pygame.draw.rect(window, (255,255,255), (screen_width + (self.index + 1) * margin + (self.index - 1) * 50, 130 + margin, 50, 60)).collidepoint(pos):
