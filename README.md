@@ -3,6 +3,8 @@ Minor Programmeren 16/17
 
 Vak: Heuristieken
 
+Team: Groepje D
+
 Studenten: Martijn de Jong (10774807), Thomas Kamps (10758151), Rick Vergunst (10793925)
 
 ---
