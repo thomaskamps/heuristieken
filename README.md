@@ -53,7 +53,7 @@ python rushHourSolver.py --algo a_star --config 3 --heur 1,2,4
 #####Best First  
 python rushHourSolver.py --algo best_first --config 1  
 #####BFS
-python rushHourSolver.py --algo bfs --config 4
+python rushHourSolver.py --algo bfs --config 4 --vis
 #####Beam
 python rushHourSolver.py --algo beam --config 1 --print  
 #####DFS  
