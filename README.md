@@ -48,8 +48,10 @@ Voor het uitvoeren van alles in deze repository zijn de volgende installaties ve
 ---
 
 ###Voorbeelden algoritmen  
-#####A Star  
-python rushHourSolver.py --algo a_star --config 3 --heur 1,2,4  
+#####A Star
+'''
+python rushHourSolver.py --algo a_star --config 3 --heur 1,2,4
+'''
 #####Best First  
 python rushHourSolver.py --algo best_first --config 1  
 #####BFS
