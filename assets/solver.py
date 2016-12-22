@@ -27,51 +27,79 @@ class Solver(object):
 					car_n = gridObj.retrieve_value(car[2], car[3])
 					
 					# Try to move selected car both ways
-					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, heuristics)
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, heuristics, None)
 					if returned:
 						return returned
 
 		return "No solution"
 
 	def beam(self, grid, car_list):
-		# Initialize variables
-		beam = [(0, grid, car_list)]
-		pre_grid = {}
-		pre_grid[str(grid)] = "finished"
-		width = 100
-		solution = True
+		beam = []
+		queue, pre_grid = init_var_queue(grid, car_list, True)
 
-		while solution:
-
-			queue = Queue.PriorityQueue()
-
-			for x in beam:
-
-				# Take first grid from queue
-				get_grid, gridObj = retrieve_grid(x, "Beam")
-				
-				# Check for all cars in the grid if there are moves possible
-				for car in get_grid[2]:
-				
-					# Skip the placeholder car
-					if car != 'placeholder':
-					
-						# Find the car number
-						car_n = gridObj.retrieve_value(car[2], car[3])
-						
-						# Try to move selected car both ways
-						returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "Beam")
-						if returned:
-							return returned
+		# Main loop
+		while queue:
 			
-			# Check if there are more grids to check
+			# Take first grid from queue
+			get_grid, gridObj = retrieve_grid(queue, True)
+			
+			# Check for all cars in the grid if there are moves possible
+			for car in get_grid[2]:
+			
+				# Skip the placeholder car
+				if car != 'placeholder':
+				
+					# Find the car number
+					car_n = gridObj.retrieve_value(car[2], car[3])
+					
+					# Try to move selected car both ways
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "Beam", beam)
+					if returned:
+						return returned
+
 			if queue.empty():
-				return "No Solution"
+				# Retrieve elements from the beam and put them in the queue, according to the width
+				beam.sort()
+				beam = beam[:4]
+				for x in beam:
+					queue.put(x)
+
+				beam = []
+
+				if queue.empty():
+					return "No Solution"
+
+	def hybrid_beam(self, grid, car_list):
+		beam = []
+		queue, pre_grid = init_var_queue(grid, car_list, True)
+
+		# Main loop
+		while queue:
+			
+			# Take first grid from queue
+			get_grid, gridObj = retrieve_grid(queue, True)
+			
+			# Check for all cars in the grid if there are moves possible
+			for car in get_grid[2]:
+			
+				# Skip the placeholder car
+				if car != 'placeholder':
+				
+					# Find the car number
+					car_n = gridObj.retrieve_value(car[2], car[3])
+					
+					# Try to move selected car both ways
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "Beam", beam)
+					if returned:
+						return returned
+
+			# Retrieve elements from the beam and put them in the queue, according to the width
+			beam.sort()
+			beam = beam[:2]
+			for x in beam:
+				queue.put(x)
 
 			beam = []
-
-			# Fill up the beam with grids equal to the width
-			queue, beam, pre_grid = fill_beam(width, queue, beam, pre_grid)
 
 	def bfs(self, grid, car_list):
 		queue, pre_grid = init_var_queue(grid, car_list, False)
@@ -91,7 +119,7 @@ class Solver(object):
 					car_n = gridObj.retrieve_value(car[2], car[3])
 					
 					# Try to move selected car both ways
-					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, False)
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, False, None)
 					if returned:
 						return returned
 
@@ -118,7 +146,7 @@ class Solver(object):
 					car_n = gridObj.retrieve_value(car[2], car[3])
 					
 					# Try to move selected car both ways
-					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, False)
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, False, None)
 					if returned:
 						return returned
 
@@ -143,7 +171,7 @@ class Solver(object):
 					car_n = gridObj.retrieve_value(car[2], car[3])
 					
 					# Try to move selected car both ways
-					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "Best")
+					returned = try_move(gridObj, car_n, get_grid, pre_grid, queue, "Best", None)
 					if returned:
 						return returned
 
@@ -174,7 +202,7 @@ def retrieve_grid(queue, heuristic):
 	return get_grid, gridObj
 
 # Function for moving the car, checking for solution and creating new states
-def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic):
+def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic, beam):
 	if heuristic != False:
 		num = 1
 	else:
@@ -193,12 +221,12 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic):
 		if newGridObjGridStr not in pre_grid:
 
 			if heuristic != False:
-				if heuristic != "Best":
+				if heuristic != "Best" or heuristic != "Beam":
 
 					# Add the cost of the previous board
 					cost = get_grid[0]
 
-				if "1" in heuristic or heuristic == "Beam":
+				if "1" in heuristic:
 
 					# Heuristic: Distance red car to exit
 					cost = red_to_end(newGridObj) + cost
@@ -210,7 +238,7 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic):
 						if newGridObj.retrieve_value(i, newGridObj.car_list[1][3]) != 0:
 							cost += 1000
 
-				if "3" in heuristic or heuristic == "Beam": 
+				if "3" in heuristic: 
 					
 					# Heuristic: Cost of blocking car is higher than blocking truck
 					for i in range(newGridObj.car_list[1][2] + newGridObj.car_list[1][1], len(newGridObj.grid)):
@@ -236,7 +264,7 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic):
 							if newGridObj.check_move_car(car_num, -1):
 								cost += 100
 
-				if heuristic == "Best":
+				if heuristic == "Best" or heuristic == "Beam":
 					cost = red_to_end(newGridObj)
 					cost*= 5
 					cost -= newGridObj.grid[newGridObj.car_list[1][3]].count(0)*10
@@ -248,7 +276,7 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic):
 				if newGridObj.car_list[1][2] != (len(newGridObj.grid[0])-2):
 					
 					# Add grid to queue to be further processed
-					queue, pre_grid = add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic)
+					queue, pre_grid = add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic, beam)
 				
 				# Return and finish algorithm
 				else:
@@ -256,45 +284,32 @@ def move_car(move, gridObj, car_n, get_grid, pre_grid, queue, heuristic):
 					return (newGridObj, pre_grid)
 			
 			# Add state to queue to be further processed
-			queue, pre_grid = add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic)
+			queue, pre_grid = add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic, beam)
 
 # Heuristic: Distance from the red car to the end
 def red_to_end(newGridObj):
 	return len(newGridObj.grid) - newGridObj.car_list[1][2] - newGridObj.car_list[1][1]
 
 #Fill the queue according to the algorithm
-def add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic):
+def add_state(queue, cost, newGridObj, get_grid, pre_grid, newGridObjGridStr, num, heuristic, beam):
 	if heuristic != False:
 		if heuristic == "Beam":
-			queue.put((cost, newGridObj.grid, newGridObj.car_list, get_grid[num][:]))
+			beam.append((cost, newGridObj.grid, newGridObj.car_list))
 		else:
 			queue.put((cost, newGridObj.grid, newGridObj.car_list))
 	else:
 		queue.put((newGridObj.grid, newGridObj.car_list))
 
 	# Add to pre_grid
-	if heuristic != "Beam":
-		pre_grid[newGridObjGridStr] = get_grid[num][:]
+	pre_grid[newGridObjGridStr] = get_grid[num][:]
 	return queue, pre_grid
 
 # Try to move a car both ways
-def try_move(gridObj, car_n, get_grid, pre_grid, queue, heuristic):
-	returned = move_car(1, gridObj, car_n, get_grid, pre_grid, queue, heuristic)
+def try_move(gridObj, car_n, get_grid, pre_grid, queue, heuristic, beam):
+	returned = move_car(1, gridObj, car_n, get_grid, pre_grid, queue, heuristic, beam)
 	if returned:
 		return returned
 			
-	returned = move_car(-1, gridObj, car_n, get_grid, pre_grid, queue, heuristic)
+	returned = move_car(-1, gridObj, car_n, get_grid, pre_grid, queue, heuristic, beam)
 	if returned:
 		return returned
-
-# Fill the beam according to the given width
-def fill_beam(width, queue, beam, pre_grid):
-	for i in range(width):
-		if queue.empty():
-			break
-		else:
-			obj = queue.get()
-			beam.append(obj[:3])
-			pre_grid[str(obj[1])] = obj[3]
-
-	return queue, beam, pre_grid

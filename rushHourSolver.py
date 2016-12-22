@@ -42,6 +42,8 @@ if __name__ == '__main__':
         temp = solver.beam(grid.grid, grid.car_list)
     elif str(args.algo) == "dfs":
         temp = solver.dfs(grid.grid, grid.car_list)
+    elif str(args.algo) == "hybrid":
+        temp = solver.hybrid_beam(grid.grid, grid.car_list)
     else:
         temp = solver.a_star(grid.grid, grid.car_list, str(args.heur))
 
