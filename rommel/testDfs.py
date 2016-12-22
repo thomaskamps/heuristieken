@@ -27,6 +27,7 @@ def bfs(grid, car_list):
 		get_grid = queue.get()
 		gridObj = Grid(get_grid[1], get_grid[2])
 		
+		temper = []
 		# Check for all cars in the grid if there are moves possible
 		for car in get_grid[2]:
 		
@@ -64,21 +65,11 @@ def bfs(grid, car_list):
 							
 							# Check for solution (clear path to endpoint)
 							if newGridObj.check_solution():
-								
-								# Check if red car is at the endpoint
-								if newGridObj.car_list[1][2] != (len(newGridObj.grid[0])-2):
-									
-									# Add grid to queue to be further processed
-									queue.put((cost, newGridObj.grid, newGridObj.car_list))
-									pre_grid[newGridObjGridStr] = get_grid[1][:]
-								
-								# Return and finish algorithm
-								else:
-									pre_grid[newGridObjGridStr] = get_grid[1][:]
-									return (newGridObj, pre_grid)
+								pre_grid[newGridObjGridStr] = get_grid[1][:]
+								return (newGridObj, pre_grid)
 							
 							# Add state to queue to be further processed
-							queue.put((cost, newGridObj.grid, newGridObj.car_list))
+							temper.append((cost, newGridObj.grid, newGridObj.car_list))
 							pre_grid[newGridObjGridStr] = get_grid[1][:]
 				
 				# Try to move selected car both ways
@@ -89,6 +80,10 @@ def bfs(grid, car_list):
 				returned = move_car(-1)
 				if returned:
 					return returned
+		temper.sort()
+		temper=temper[:2]
+		for x in temper:
+			queue.put(x)
 
 	return "No solution"
 

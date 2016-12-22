@@ -1,6 +1,7 @@
 import os
 import argparse
 import sys
+from draw import draw_solution
 
 # Import classes
 execfile(os.getcwd() + '/assets/newClasses.py')
@@ -40,27 +41,36 @@ if __name__ == '__main__':
         temp = solver.best_first(grid.grid, grid.car_list)
     elif str(args.algo) == "beam":
         temp = solver.beam(grid.grid, grid.car_list)
+<<<<<<< Updated upstream
     elif str(args.algo) == "dfs":
         temp = solver.dfs(grid.grid, grid.car_list)
     elif str(args.algo) == "hybrid":
         temp = solver.hybrid_beam(grid.grid, grid.car_list)
     else:
         temp = solver.a_star(grid.grid, grid.car_list, str(args.heur))
+=======
+    elif str(args.algo) == "a_star":
+        temp = solver.a_star(grid.grid, grid.car_list)
+    else:
+        print "No correct algorithm specified!"
+        sys.exit(0)
+>>>>>>> Stashed changes
 
 	# Construct statelist (shortest path)
     state_list = []
     state_list.append(temp[0].grid)
     current_grid = temp[0].grid
-    print len(temp[1])
+    print "Number of states explored: ", len(temp[1])
 
     while current_grid != grid.grid:
     	temper = temp[1][str(current_grid)]
     	state_list.append(temper)
     	current_grid = temper
+    print "Length of the solutions path: ", len(state_list)-1
     
-    # If print is passed as argument, print number of moves
+    # If print is passed as argument, print the solutions path
     if args.printer:
-        print(len(state_list)-1)
+        print(state_list)
 		
 	# If visual is passed as argument, draw visualisation
     if args.visual:
