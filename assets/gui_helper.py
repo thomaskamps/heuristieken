@@ -124,10 +124,6 @@ def create_objects():
     	bestfirstButton.index = 20
     	bestfirstButton.section = 2
     	bestfirstButton.text = "bestfirst"
-    	bfsButton = Button()
-    	bfsButton.index = 30
-    	bfsButton.section = 2
-    	bfsButton.text = "bfs"
     	
     	playButton = Button()
     	playButton.index = 100
@@ -179,9 +175,9 @@ def create_objects():
     	infoLabel.index = 5
     	infoLabel.text = "Info"
     	
-    	allObjects = pygame.sprite.Group(config1Button, config2Button, config3Button, config4Button, config5Button, config6Button, config7Button, astarButton, bestfirstButton, bfsButton, playButton, resetButton, previousButton, nextButton, liveButton, moveLabel, configLabel, controlLabel, algoLabel, colorButton, infoLabel)
+    	allObjects = pygame.sprite.Group(config1Button, config2Button, config3Button, config4Button, config5Button, config6Button, config7Button, astarButton, bestfirstButton, playButton, resetButton, previousButton, nextButton, liveButton, moveLabel, configLabel, controlLabel, algoLabel, colorButton, infoLabel)
     	
-    	return config1Button, config2Button, config3Button, config4Button, config5Button, config6Button, config7Button, astarButton, bestfirstButton, bfsButton, playButton, resetButton, previousButton, nextButton, liveButton, moveLabel, configLabel, controlLabel, algoLabel, colorButton, infoLabel, allObjects
+    	return config1Button, config2Button, config3Button, config4Button, config5Button, config6Button, config7Button, astarButton, bestfirstButton, playButton, resetButton, previousButton, nextButton, liveButton, moveLabel, configLabel, controlLabel, algoLabel, colorButton, infoLabel, allObjects
 
 
     	

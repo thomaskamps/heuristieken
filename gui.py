@@ -3,9 +3,9 @@ import sys
 import random
 import os
 
-execfile(os.getcwd() + '/data.py')
+execfile(os.getcwd() + '/assets/data.py')
 execfile(os.getcwd() + '/assets/solver.py')
-execfile(os.getcwd() + '/gui_helper.py')
+execfile(os.getcwd() + '/assets/gui_helper.py')
 
 def draw_solution(grids):    
     pygame.init()
@@ -33,7 +33,7 @@ def draw_solution(grids):
     cars = car_color(grids)
     draw_grid(grids[i], cars)
     
-    config1Button, config2Button, config3Button, config4Button, config5Button, config6Button, config7Button, astarButton, bestfirstButton, bfsButton, playButton, resetButton, previousButton, nextButton, liveButton, moveLabel, configLabel, controlLabel, algoLabel, colorButton, infoLabel, allObjects = create_objects()
+    config1Button, config2Button, config3Button, config4Button, config5Button, config6Button, config7Button, astarButton, bestfirstButton, playButton, resetButton, previousButton, nextButton, liveButton, moveLabel, configLabel, controlLabel, algoLabel, colorButton, infoLabel, allObjects = create_objects()
     
     set_controlpanel("astar", 1, grids, i, cars)
 
