@@ -47,9 +47,6 @@ Voor het uitvoeren van alles in deze repository zijn de volgende installaties ve
 --print : print de gevonden oplossing uit  
 --visual : Genereert een visualisatie die de gevonden oplossing laat zien. (Meer opties via de GUI, zie onderaan)
 
----
-
-###Voorbeelden algoritmen  
 #####A Star
 ```
 python rushHourSolver.py --algo a_star --config 3 --heur 1,2,4
@@ -77,7 +74,7 @@ python rushHourSolver.py --algo hybrid_beam --config 6 --print
 
 ---
 
-###GUI aanroepen
+###GUI uitvoeren
 ```
 python gui.py
 ```
