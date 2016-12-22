@@ -29,7 +29,7 @@ http://heuristieken.nl/wiki/index.php?title=Rush_Hour
 ###Installatie
 
 Voor het uitvoeren van alles in deze repository zijn de volgende installaties vereist:  
-1 - Python 2.7  
+1 - Python 2.7  (let op: Python 2!)
 2 - PyGame  
 
 ---
@@ -49,21 +49,33 @@ Voor het uitvoeren van alles in deze repository zijn de volgende installaties ve
 
 ###Voorbeelden algoritmen  
 #####A Star
-'''
+```
 python rushHourSolver.py --algo a_star --config 3 --heur 1,2,4
-'''
+```
 #####Best First  
+```
 python rushHourSolver.py --algo best_first --config 1  
+```
 #####BFS
+```
 python rushHourSolver.py --algo bfs --config 4 --vis
+```
 #####Beam
+```
 python rushHourSolver.py --algo beam --config 1 --print  
+```
 #####DFS  
-python rushHourSolver.py --algo dfs --config 2  
+```
+python rushHourSolver.py --algo dfs --config 2 
+```
 #####Hybrid Beam  
+```
 python rushHourSolver.py --algo hybrid_beam --config 6 --print
+```
 
 ---
 
 ###GUI aanroepen
+```
 python gui.py
+```
