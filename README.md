@@ -42,8 +42,8 @@ Voor het uitvoeren van alles in deze repository zijn de volgende installaties ve
 #####Verplicht voor a_star  
 --heur (nummers) : Bepaald welke heuristieken worden toegepast voor a_star, keuze uit 1 tot en met 4, meerdere heuristieken worden gescheiden met komma en zonder spaties (vb. --heur 1,3)    
 #####Optioneel
---print : print het gevonden aantal oplossing uit  
---vis/--visual : Genereert een visualisatie die de gevonden oplossing laat zien. (Meer opties via de GUI, zie onderaan)
+--print : print de gevonden oplossing uit  
+--visual : Genereert een visualisatie die de gevonden oplossing laat zien. (Meer opties via de GUI, zie onderaan)
 
 ---
 

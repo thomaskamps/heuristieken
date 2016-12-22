@@ -4,7 +4,7 @@ import sys
 from draw import draw_solution
 
 # Import classes
-execfile(os.getcwd() + '/assets/newClasses.py')
+execfile(os.getcwd() + '/assets/classes.py')
 execfile(os.getcwd() + '/assets/solver.py')
 
 # Initializer (loads settings etc.)
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     args = parse.parse_args(sys.argv[1:])
 	
 	# Load selected config and construct grid
-    execfile(os.getcwd() + '/configsAlt/' + str(args.config) + '.py')
+    execfile(os.getcwd() + '/configs/' + str(args.config) + '.py')
     solver = Solver(grid.grid, grid.car_list)
 
     # Run algorithm and store return values
@@ -43,7 +43,7 @@ if __name__ == '__main__':
         temp = solver.beam(grid.grid, grid.car_list)
     elif str(args.algo) == "dfs":
         temp = solver.dfs(grid.grid, grid.car_list)
-    elif str(args.algo) == "hybrid":
+    elif str(args.algo) == "hybrid_beam":
         temp = solver.hybrid_beam(grid.grid, grid.car_list)
     elif str(args.algo) == "a_star":
         temp = solver.a_star(grid.grid, grid.car_list, str(args.heur))
